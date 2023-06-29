@@ -2,17 +2,26 @@
 import Link from "@component/icons/Link.astro";
 import Flex from "@component/utility/Flex.astro";
 import Tooltip from "./Tooltip.astro";
+import Verified from "@component/icons/Verified.astro";
 
+/** Connection container component */
 interface Props {
+  /** A type of the connection + removed skype connection */
   type: Connection;
+  /** Username from the connection used */
   username: string;
+  /** URL of the connection, link icon won't be passed if no url passed */
   url?: string;
+  /** Verified indicator metadata */
+  verified?: boolean;
 }
 
-const typeLabels = {
+/** Labels for tooltips of each connection type */
+const tooltipLabels = {
   "paypal": "PayPal",
   "reddit": "Reddit",
   "steam": "Steam",
+  "skype": "Skype",
   "tiktok": "TikTok",
   "twitter": "Twitter",
   "ebay": "eBay",
@@ -31,12 +40,12 @@ const typeLabels = {
   "youtube": "YouTube",
 }
 
-const { type, username, url } = Astro.props;
+const { type, username, url, verified = false } = Astro.props;
 ---
 
 <Flex align="center" justify="space-between" class="connection">
   <Flex align="center" gap={8}>
-    <Tooltip label={typeLabels[type]}>
+    <Tooltip label={tooltipLabels[type]}>
       <img
         src={`/connections/${type}.svg`}
         alt={`Connection - ${type}`}
@@ -45,7 +54,10 @@ const { type, username, url } = Astro.props;
         class="icon"
       />
     </Tooltip>
-    <span class="username">{username}</span>
+    <Flex align="center" gap={4}>
+      <span class="username">{username}</span>
+      {verified && <Verified />}
+    </Flex>
   </Flex>
   {url && <Link href={url} />}
 </Flex>

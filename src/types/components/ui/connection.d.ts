@@ -1,7 +1,9 @@
+/** All available connection types + removed skype connection */
 type Connection =
   | "paypal"
   | "reddit"
   | "steam"
+  | "skype"
   | "tiktok"
   | "twitter"
   | "ebay"
